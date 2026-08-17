@@ -1,0 +1,16 @@
+{
+  "name": "ecossistema-educacional",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
+    "astro": "^4.15.0"
+  }
+}

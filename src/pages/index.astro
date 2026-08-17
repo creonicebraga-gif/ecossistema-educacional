@@ -1,0 +1,103 @@
+---
+// src/pages/index.astro
+import { supabase } from '../lib/supabaseClient';
+
+const { data: desafioBanco } = await supabase
+  .from('desafio_jogos')
+  .select('*')
+  .eq('id', 'turing_01')
+  .single();
+
+const titulo = desafioBanco?.titulo || "🔐 O Bunker de Alan Turing: Quebrando a Enigma";
+const enunciado = desafioBanco?.enunciado || "Alan Turing quebrou a criptografia nazista com automação. Use seus conhecimentos para criar uma função que receba uma string e a retorne invertida (de trás para frente), revelando o plano secreto.";
+const codigoBase = desafioBanco?.codigo_base || "function decifrarMensagem(texto) {\n    return texto;\n}";
+const gabarito = desafioBanco?.gabarito || "ENIGMA";
+const dicaAjuda = desafioBanco?.dica_ajuda || "Em JavaScript, você pode inverter uma palavra facilmente transformando-a em uma lista de letras, invertendo a lista e juntando tudo novamente. Exemplo: return texto.split('').reverse().join('');";
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecossistema Educacional - Alan Turing</title>
+    <style>
+        body { background-color: #0f0f1a; color: #e2e8f0; font-family: sans-serif; padding: 20px; text-align: center; }
+        .bunker-turing { background-color: #16162a; padding: 25px; border-radius: 12px; border: 1px solid #2d2d44; max-width: 650px; margin: 40px auto; text-align: left; }
+        .historia { color: #94a3b8; line-height: 1.6; }
+        textarea { width: 100%; height: 150px; background-color: #0d0d16; color: #a6e3a1; font-family: monospace; padding: 12px; border-radius: 6px; border: 1px solid #444; box-sizing: border-box; }
+        button { background-color: #4f46e5; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        button:hover { background-color: #4338ca; }
+        .painel-feedback { margin-top: 15px; padding: 15px; border-radius: 6px; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+    <h1 style="color: #818cf8; margin-top: 30px;">🚀 Ecossistema Educacional</h1>
+    <p style="color: #64748b;">Ambiente de Alta Performance • </p>
+
+    <div class="bunker-turing" data-gabarito={gabarito} data-dica={dicaAjuda}>
+        <h2>{titulo}</h2>
+        <p class="historia"><strong>Instruções:</strong> {enunciado}</p>
+        
+        <textarea id="codigoTuring">{codigoBase}</textarea>
+        <button id="btnValidar">🚀 Validar Algoritmo</button>
+        
+        <div id="feedback" class="painel-feedback"></div>
+    </div>
+
+    <script is:inline>
+        let erros = 0;
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            const botao = document.getElementById('btnValidar');
+            const textarea = document.getElementById('codigoTuring');
+            const feedback = document.getElementById('feedback');
+            
+            const container = document.querySelector('.bunker-turing');
+            const respostaEsperada = container ? container.getAttribute('data-gabarito') : "ENIGMA";
+            const dicaMentoria = container ? container.getAttribute('data-dica') : "";
+
+            botao?.addEventListener('click', () => {
+                const codigo = textarea.value;
+                if (feedback) feedback.style.display = "block";
+
+                try {
+                    const funcaoAluno = new Function(codigo + "\nreturn decifrarMensagem;");
+                    const executar = funcaoAluno();
+                    const resultado = executar("AMGINE");
+
+                    if (resultado === respostaEsperada) {
+                        if (feedback) {
+                            feedback.style.backgroundColor = "#1e3a1e";
+                            feedback.style.color = "#a6e3a1";
+                            feedback.innerHTML = "✅ SUCESSO ABSOLUTO! Você quebrou a Cifra Enigma e conquistou a Medalha Alan Turing! 🏅🔐";
+                        }
+                        erros = 0;
+                    } else {
+                        erros++;
+                        if (feedback) {
+                            if (erros < 3) {
+                                feedback.style.backgroundColor = "#3a3a1e";
+                                feedback.style.color = "#f9e2af";
+                                feedback.innerHTML = "❌ Código incorreto. Tentativas falhas: " + erros + "/3";
+                            } else {
+                                feedback.style.backgroundColor = "#2e3a1e";
+                                feedback.style.color = "#f9e2af";
+                                feedback.innerHTML = "💡 *MENTORIA AUTOMATIZADA ACTIVATED* 💡<br><br><b>Dica de Ouro:</b> " + dicaMentoria;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    erros++;
+                    if (feedback) {
+                        feedback.style.backgroundColor = "#3a1e1e";
+                        feedback.style.color = "#f38ba8";
+                        feedback.innerHTML = "💥 ERRO DE SINTAXE: Verifique se fechou corretamente as chaves da função.";
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
