@@ -1,0 +1,18 @@
+name: Manter Supabase Ativo
+
+on:
+  schedule:
+    # Executa a cada 4 dias (às 00:00 UTC) para o banco não pausar por falta de uso
+    - cron: '0 0 */4 * *'
+  # Permite que você ative manualmente pela aba "Actions" caso queira testar
+  workflow_dispatch:
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar sinal de atividade para o Banco de Dados
+        run: |
+          curl -X GET "${{ secrets.SUPABASE_URL }}/rest/v1/" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
