@@ -5,14 +5,14 @@ import { supabase } from '../lib/supabaseClient';
 const { data: desafioBanco } = await supabase
   .from('desafio_jogos')
   .select('*')
-  .eq('id', 'turing_01')
+  .eq('id', '1b556232-a50d-451e-b86e-b6e1564aaa6bf')
   .single();
 
-const titulo = desafioBanco?.titulo || "🔐 O Bunker de Alan Turing: Quebrando a Enigma";
-const enunciado = desafioBanco?.enunciado || "Alan Turing quebrou a criptografia nazista com automação. Use seus conhecimentos para criar uma função que receba uma string e a retorne invertida (de trás para frente), revelando o plano secreto.";
-const codigoBase = desafioBanco?.codigo_base || "function decifrarMensagem(texto) {\n    return texto;\n}";
-const gabarito = desafioBanco?.gabarito || "ENIGMA";
-const dicaAjuda = desafioBanco?.dica_ajuda || "Em JavaScript, você pode inverter uma palavra facilmente transformando-a em uma lista de letras, invertendo a lista e juntando tudo novamente. Exemplo: return texto.split('').reverse().join('');";
+const titulo = desafioBanco?.titulo || "⚡ O Laboratório Secreto de Nikola Tesla";
+const enunciado = desafioBanco?.enunciado || "Nikola Tesla revolucionou o mundo com a corrente alternada e seus experimentos com eletricidade! Ajude Tesla a estabilizar a frequência de sua Bobina criando uma função que calcule a potência elétrica (multiplicando a corrente pela tensão).";
+const codigoBase = desafioBanco?.codigo_base || "function calcularPotencia(corrente, tensao) {\n  return 0;\n}";
+const gabarito = desafioBanco?.gabarito || "ELETRICIDADE";
+const dicaAjuda = desafioBanco?.dica_ajuda || "Para calcular a potência, multiplique as duas variáveis recebidas usando o operador asterisco (*). Exemplo: return corrente * tensao;";
 ---
 
 <!DOCTYPE html>
@@ -20,96 +20,23 @@ const dicaAjuda = desafioBanco?.dica_ajuda || "Em JavaScript, você pode inverte
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecossistema Educacional - Alan Turing</title>
-  <style>
-    .bunker-turing { background-color: #16162a; padding: 25px; border-radius: 8px; }
-    .historia { color: #94a3b8; line-height: 1.6; }
-    textarea { width: 100%; height: 150px; background-color: #1e293b; color: white; padding: 10px; border-radius: 6px; }
-    button { background-color: #4f46e5; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; }
-    button:hover { background-color: #4338ca; }
-    .painel-feedback { margin-top: 15px; padding: 15px; border-radius: 6px; font-weight: bold; }
-
-    /* Estilos dos Botões dos Mentores */
-    .selecao-mentores {
-      text-align: center;
-      margin: 30px 0;
-    }
-    .selecao-mentores h2 {
-      color: #ffffff;
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-    }
-    .botoes-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .btn-mentor {
-      text-decoration: none;
-      padding: 15px 25px;
-      border-radius: 8px;
-      font-weight: bold;
-      color: #ffffff;
-      transition: transform 0.2s, filter 0.2s;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .btn-mentor:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.2);
-    }
-    .turing { background-color: #2563eb; }
-    .ada { background-color: #7c3aed; }
-    .tesla { background-color: #d97706; }
-  
-}
-
-.botoes-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.btn-mentor {
-  text-decoration: none;
-  padding: 15px 25px;
-  border-radius: 8px;
-  font-weight: bold;
-  color: #ffffff;
-  transition: transform 0.2s, filter 0.2s;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.btn-mentor:hover {
-  transform: translateY(-3px);
-  filter: brightness(1.2);
-}
-
-.turing { background-color: #2563eb; }
-.ada { background-color: #7c3aed; }
-.tesla { background-color: #d97706; }
-</style>
+    <title>Ecossistema Educacional - Nikola Tesla</title>
+    <style>
+        body { background-color: #0f0f1a; color: #e2e8f0; font-family: sans-serif; padding: 20px; text-align: center; }
+        .bunker-Tesla { background-color: #16162a; padding: 25px; border-radius: 12px; border: 1px solid #2d2d44; max-width: 650px; margin: 40px auto; text-align: left; }
+        .historia { color: #94a3b8; line-height: 1.6; }
+        textarea { width: 100%; height: 150px; background-color: #0d0d16; color: #a6e3a1; font-family: monospace; padding: 12px; border-radius: 6px; border: 1px solid #444; box-sizing: border-box; }
+        button { background-color: #4f46e5; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        button:hover { background-color: #4338ca; }
+        .painel-feedback { margin-top: 15px; padding: 15px; border-radius: 6px; font-weight: bold; display: none; }
+    </style>
 </head>
 <body>
-<div class="selecao-mentores">
-  <h2>Escolha seu Mentor e Comece o Desafio!</h2>
-  <div class="botoes-container">
-    <a href="/" class="btn-mentor turing">
-      <span>👨‍💻 Alan Turing</span>
-    </a>
-    <a href="/ada" class="btn-mentor ada">
-      <span>💻 Ada Lovelace</span>
-    </a>
-    <a href="/tesla" class="btn-mentor tesla">
-      <span>⚡ Nikola Tesla</span>
-    </a>
-  </div>
-</div>
+
     <h1 style="color: #818cf8; margin-top: 30px;">🚀 Ecossistema Educacional</h1>
     <p style="color: #64748b;">Ambiente de Alta Performance • </p>
 
-    <div class="bunker-turing" data-gabarito={gabarito} data-dica={dicaAjuda}>
+    <div class="bunker-Tesla" data-gabarito={gabarito} data-dica={dicaAjuda}>
         <h2>{titulo}</h2>
         <p class="historia"><strong>Instruções:</strong> {enunciado}</p>
         
