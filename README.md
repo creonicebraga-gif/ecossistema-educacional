@@ -1,4 +1,4 @@
-# 🌟 Ecossistema Educacional Gamificado
+.# 🌟 Ecossistema Educacional Gamificado
 
 Um projeto focado em apoiar e engajar estudantes de escolas técnicas na área de tecnologia (TI), combatendo a evasão escolar por meio da gamificação e de histórias inspiradoras.
 
